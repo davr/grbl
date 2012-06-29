@@ -33,6 +33,9 @@
 #define STEPPERS_DISABLE_PORT    PORTB
 #define STEPPERS_DISABLE_BIT         0
 
+// uncomment this, inverts the stepper enable logic
+#define STEPPERS_DISABLE_INVERT 1
+
 #define STEPPING_DDR       DDRD
 #define STEPPING_PORT      PORTD
 #define X_STEP_BIT           2

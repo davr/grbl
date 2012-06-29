@@ -84,7 +84,11 @@ static void st_wake_up()
   // Initialize stepper output bits
   out_bits = (0) ^ (settings.invert_mask); 
   // Enable steppers by resetting the stepper disable port
+#ifdef STEPPERS_DISABLE_INVERT
+  STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT);
+#else
   STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT);
+#endif
   // Enable stepper driver interrupt
   TIMSK1 |= (1<<OCIE1A);
 }
@@ -102,7 +106,11 @@ static void st_go_idle()
     _delay_ms(STEPPER_IDLE_LOCK_TIME);   
   #endif
   // Disable steppers by setting stepper disable
+#ifdef STEPPERS_DISABLE_INVERT
+  STEPPERS_DISABLE_PORT &= ~(1<<STEPPERS_DISABLE_BIT);
+#else
   STEPPERS_DISABLE_PORT |= (1<<STEPPERS_DISABLE_BIT);
+#endif
 }
 
 // Initializes the trapezoid generator from the current block. Called whenever a new 
